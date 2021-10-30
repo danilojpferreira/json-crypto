@@ -47,13 +47,13 @@ $ yarn add crypto
 Once installed, you can import `JSON-Crypto` into your JavaScript project, insert at the top of your file the following line:
 
 ```javascript
-import json-crypto from '@danilo_pereira/json-crypto';
+import jsonCrypto from '@danilo_pereira/json-crypto';
 ```
 
 or
 
 ```javascript
-var json-crypto = require('@danilo_pereira/json-crypto');
+var jsonCrypto = require('@danilo_pereira/json-crypto');
 ```
 
 You also can import the methods one by one, using:
@@ -62,11 +62,11 @@ You also can import the methods one by one, using:
 import { encrypt, decrypt, decryptKey } from "@danilo_pereira/json-crypto";
 ```
 
-In the latter case, you should not call `json-crypto` methods like `json-crypto.encrypt(...)` but use the method directly like `encrypt(...)`
+In the latter case, you should not call `json-crypto` methods like `jsonCrypto.encrypt(...)` but use the method directly like `encrypt(...)`
 
 ## Encrypt
 
-To encrypt a JSON or Simple JavaScript Object you should call `json-crypto.encrypt(json, encriptedKeys, secret, secret_2)`.
+To encrypt a JSON or Simple JavaScript Object you should call `jsonCrypto.encrypt(json, encriptedKeys, secret, secret_2)`.
 
 ### Arguments:
 
@@ -82,10 +82,10 @@ This should return a valid Simple JavaScript Object encrypted.
 ### Example
 
 ```javascript
-import json-crypto from '@danilo_pereira/json-crypto';
+import jsonCrypto from '@danilo_pereira/json-crypto';
 ...
 // SIMPLE CASE:
-crypto.encrypt({
+jsonCrypto.encrypt({
     key_1: "value_1",
     key_2: 2,
     key_3: null,
@@ -106,7 +106,7 @@ Output:
  */
 
 // KEY ENCRYPT CASE:
-crypto.encrypt({
+jsonCrypto.encrypt({
     key_1: "value_1",
     key_2: 2,
     key_3: null,
@@ -127,7 +127,7 @@ Output:
 */
 
 // KEY ENCRYPT CASE, WITH OPTIONAL HASH:
-crypto.encrypt({
+jsonCrypto.encrypt({
     key_1: "value_1",
     key_2: 2,
     key_3: null,
@@ -151,7 +151,7 @@ In this case, the secret was defined at: "StarWarsJedi####################" (32 
 
 ## Decrypt
 
-To decrypt a JSON or Simple JavaScript Object you should call `json-crypto.decrypt(json, encriptedKeys, secret, secret_2)`.
+To decrypt a JSON or Simple JavaScript Object you should call `jsonCrypto.decrypt(json, encriptedKeys, secret, secret_2)`.
 
 ### Arguments:
 
@@ -167,10 +167,10 @@ This should return a valid Simple JavaScript Object decrypted.
 ### Example
 
 ```javascript
-import json-crypto from '@danilo_pereira/json-crypto';
+import jsonCrypto from '@danilo_pereira/json-crypto';
 ...
 // SIMPLE CASE:
-crypto.decrypt(
+jsonCrypto.decrypt(
   {
    key_1: '126b1c3b908fc3',
    key_2: '1073002bd6be87660199ef1043',
@@ -192,7 +192,7 @@ Output:
  */
 
 // KEY ENCRYPT CASE:
-crypto.decrypt(
+jsonCrypto.decrypt(
   {
   '0f6f0911c4': '126b1c3b908fc3',
   '0f6f0911c7': '1073002bd6be87660199ef1043',
@@ -215,7 +215,7 @@ Output:
 
 
 // KEY ENCRYPT CASE, WITH OPTIONAL HASH:
-crypto.decrypt({
+jsonCrypto.decrypt({
   '16de1fe44c': '0bda0ace187253',
   '16de1fe44f': '09c216de5e43174cbf5b8cd709',
   '16de1fe44e': '09c216de5e43174db1',
@@ -239,7 +239,7 @@ In this case, the secret was defined at: "StarWarsJedi####################" (32 
 
 ## Decrypt Syngle Key
 
-To decrypt a `String` you should call `json-crypto.decryptKey(string, secret, secret_2)`.
+To decrypt a `String` you should call `jsonCrypto.decryptKey(string, secret, secret_2)`.
 
 ### Arguments:
 
@@ -254,10 +254,10 @@ This should return a `String`, `Number`, `Boolean` or `null` decrypted.
 ### Example
 
 ```javascript
-import json-crypto from '@danilo_pereira/json-crypto';
+import jsonCrypto from '@danilo_pereira/json-crypto';
 ...
 // SIMPLE CASE:
-crypto.decrypt("126b1c3b908fc3");
+jsonCrypto.decrypt("126b1c3b908fc3");
 /*
 Output:
 "value_1"
