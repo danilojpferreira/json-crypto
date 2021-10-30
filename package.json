@@ -1,0 +1,20 @@
+{
+  "name": "@danilo_pereira/json-crypto",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilojpferreira/json-crypto.git"
+  },
+  "keywords": [],
+  "author": "danilo_pereira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danilojpferreira/json-crypto/issues"
+  },
+  "homepage": "https://github.com/danilojpferreira/json-crypto#readme",
+  "dependencies": {
+    "crypto": "^1.0.1"
+  },
+  "description": "Make API rest easy using a json file as pipeline"
+}
