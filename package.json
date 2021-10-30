@@ -1,6 +1,6 @@
 {
   "name": "@danilo_pereira/json-crypto",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -16,5 +16,5 @@
   "dependencies": {
     "crypto": "^1.0.1"
   },
-  "description": "Make API rest easy using a json file as pipeline"
+  "description": "A simple way to encrypt and decrypt JSON, creating secure data transfer"
 }

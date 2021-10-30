@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+
 const { createCipheriv, createDecipheriv } = require("crypto");
 
 const algorithm = "aes-256-ctr";
@@ -51,8 +54,6 @@ const run = (
     }
   }
 
-  console.log(secretKey);
-
   let iv = secret_2;
 
   if (iv.length >= 16) {
@@ -62,8 +63,6 @@ const run = (
       iv = `${iv}#`;
     }
   }
-
-  console.log(iv);
 
   const walkOnJson = (object) => {
     const type = typeof object;
@@ -109,47 +108,44 @@ const run = (
     json = JSON.parse(json);
   } catch (error) {}
 
-  newJSON = walkOnJson(json);
-  return newJSON;
+  return walkOnJson(json);
 };
 
 /**
  * [encrypt Create a new encrypted Object]
  * @param {JSON | Object} json A input JSON or Object that should be encrypted
- * @param {Boolean} [encriptedKeys = false] Define if Object keys will be also encrypted
- * @param {String} [secret] A 32 secret chars, used as hash to encrypt
- * @param {String} [secret_2] A 16 secret chars, also used as hash to encrypt
- * @returns {Object}
+ * @param {Boolean} encriptedKeys OPTIONAL. Define if Object keys will be also encrypted. Default is false.
+ * @param {String} secret OPTIONAL. A 32 secret chars, used as hash to encrypt
+ * @param {String} secret_2 OPTIONAL. A 16 secret chars, also used as hash to encrypt
+ * @returns {Object} Return a Simple JavaScript Object;
  */
-const encrypt = (json, encriptedKeys, secret, secret_2) => {
+function encrypt(json, encriptedKeys, secret, secret_2) {
   return run(json, encriptedKeys, "encrypt", secret, secret_2);
-};
+}
 
 /**
  * [decrypt Return a decrypted Object based on Input Object]
  * @param {JSON | Object} json A input JSON or Object that should be decrypted
- * @param {Boolean} [encriptedKeys = false] Define if Object keys will be also decrypted
- * @param {String} [secret] A 32 secret chars, used as hash to encrypt
- * @param {String} [secret_2] A 16 secret chars, also used as hash to encrypt
- * @returns {Object}
+ * @param {Boolean} encriptedKeys OPTIONAL. Define if Object keys will be also decrypted. Default is false.
+ * @param {String} secret OPTIONAL. A 32 secret chars, used as hash to encrypt
+ * @param {String} secret_2 OPTIONAL. A 16 secret chars, also used as hash to encrypt
+ * @returns {Object} Return a Simple JavaScript Object;
  */
-const decrypt = (json, encriptedKeys, secret, secret_2) => {
+function decrypt(json, encriptedKeys, secret, secret_2) {
   return run(json, encriptedKeys, "decrypt", secret, secret_2);
-};
+}
 
 /**
  * [decryptKey Return a decrypted {Any} based on Input String]
  * @param {String} string A input string that should be decrypted
- * @param {String} [secret] A 32 secret chars, used as hash to decrypt
- * @param {String} [secret_2] A 16 secret chars, also used as hash to decrypt
- * @returns {Any}
+ * @param {String} secret OPTIONAL. A 32 secret chars, used as hash to decrypt
+ * @param {String} secret_2 OPTIONAL. A 16 secret chars, also used as hash to decrypt
+ * @returns {String} Return a string;
  */
-const decryptKey = (string, secret, secret_2) => {
+function decryptKey(string, secret, secret_2) {
   return d(string, secret, secret_2);
-};
+}
 
-module.exports = {
-  encrypt: encrypt,
-  decrypt: decrypt,
-  decryptKey: decryptKey,
-};
+module.exports.encrypt = encrypt;
+module.exports.decrypt = decrypt;
+module.exports.decryptKey = decryptKey;
