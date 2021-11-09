@@ -146,6 +146,12 @@ function decryptKey(string, secret, secret_2) {
   return d(string, secret, secret_2);
 }
 
+function encryptKey(string, secret, secret_2) {
+  return e(string, secret, secret_2);
+}
+
+
 module.exports.encrypt = encrypt;
 module.exports.decrypt = decrypt;
 module.exports.decryptKey = decryptKey;
+module.exports.encryptKey = encryptKey;
