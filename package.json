@@ -1,6 +1,6 @@
 {
   "name": "@danilo_pereira/json-crypto",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/danilojpferreira/json-crypto#readme",
   "dependencies": {
+    "bson": "^4.5.4",
     "crypto": "^1.0.1"
   },
   "description": "A simple way to encrypt and decrypt JSON, creating secure data transfer"

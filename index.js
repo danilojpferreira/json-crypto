@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 
+const { ObjectID } = require("bson");
 const { createCipheriv, createDecipheriv } = require("crypto");
 
 const algorithm = "aes-256-ctr";
@@ -24,6 +25,9 @@ const cast = (any) => {
 };
 
 const e = (text, secretKey, iv) => {
+  if (typeof text === "object" && ObjectID.isValid(text)) {
+    text = text.toHexString();
+  }
   const cipher = createCipheriv(algorithm, secretKey, iv);
   const encrypted = Buffer.concat([cipher.update(cast(text)), cipher.final()]);
   return encrypted.toString("hex");
@@ -80,7 +84,8 @@ const run = (
           const newValue =
             typeof object[i] === "object" &&
             object[i] !== null &&
-            object[i] !== undefined
+            object[i] !== undefined &&
+            !ObjectID.isValid(object[i])
               ? walkOnJson(object[i])
               : operation === "encrypt"
               ? e(object[i], secretKey, iv)
