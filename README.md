@@ -20,7 +20,7 @@ Encrypt and decrypt JSON or Simple JavaScript objects. Designed to be used as mi
 
 # Restrictions
 
-For now, JSON-Crypto can encrypt and decrypt any JSON. But for JavaScript Objects, the available key values must be of type: `Object`, `Array`, `String`, `Number`, `Boolean` or `null`. We're calling this a `Simple JavaScript Object`. In this case you cannot have a `new Date()` as a value, for example.
+For now, JSON-Crypto can encrypt and decrypt any JSON. But for JavaScript Objects, the available key values must be of type: `Object`, `Array`, `String`, `Number`, `Boolean`, `ObjectId` or `null`. We're calling this a `Simple JavaScript Object`. In this case you cannot have a `new Date()` as a value, for example.
 
 # Installation
 
@@ -34,12 +34,14 @@ $ yarn add @danilo_pereira/json-crypto
 
 ## Dependencies
 
-Perhaps, the `crypto` dependency must be installed manually for the project to work.
+Perhaps, the dependecies, like `browser-or-node`, `crypto`, `crypto-js` and `bson` dependency must be installed manually for the project to work.
 
 ```bash
-$ npm install crypto
-
-$ yarn add crypto
+$ npm install <DEPENDENCY>
+```
+or
+```bash
+$ yarn add <DEPENDENCY>
 ```
 
 # Usage
@@ -59,7 +61,7 @@ var jsonCrypto = require('@danilo_pereira/json-crypto');
 You also can import the methods one by one, using:
 
 ```javascript
-import { encrypt, decrypt, decryptKey } from "@danilo_pereira/json-crypto";
+import { encrypt, decrypt, encryptKey, decryptKey } from "@danilo_pereira/json-crypto";
 ```
 
 In the latter case, you should not call `json-crypto` methods like `jsonCrypto.encrypt(...)` but use the method directly like `encrypt(...)`
@@ -72,8 +74,8 @@ To encrypt a JSON or Simple JavaScript Object you should call `jsonCrypto.encryp
 
 1. json: <font size="1">_REQUIRED_</font> A input JSON or Object that should be encrypted. Should be of type `JSON` or `Object`.
 2. encriptedKeys: <font size="1">_OPTIONAL_</font> Define if Object keys will be also encrypted. Should be of type `Boolean`. The default value is `false`.
-3. secret: <font size="1">_OPTIONAL_</font> Secret string (with up to 32 chars), used as hash to encrypt. Should be of type `String`. We use a default hash if not informed.
-4. secret_2: <font size="1">_OPTIONAL_</font> Secret string (with up to 16 chars), also used as hash to encrypt. Should be of type `String`. We use a default hash if not informed.
+3. secret: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 32 chars), used as hash to encrypt. Should be of type `String`. We use a default hash if not informed.
+4. secret_2: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 16 chars), also used as hash to encrypt. Should be of type `String`. We use a default hash if not informed.
 
 ### Output
 
@@ -134,7 +136,7 @@ jsonCrypto.encrypt({
     key_4: false,
     key_5: { key_5_1: "value_5" },
     key_6: ["value_6_1", "value_6_2"],
-}, true, "StarWarsJedi", "RabbitsEatCarrotsInTheMorning");
+}, true, "cad63375bd783382", "a92e070ecd301b6de99a8985f8e9cf9f");
 /*
 Output:
 {
@@ -145,7 +147,7 @@ Output:
   '16de1fe448': { '16de1fe4487253': '35da15d32b4c0e54b861cb' },
   '16de1fe44b': [ '0bda0ace1872547eec', '0bda0ace1872547eef' ]
 }
-In this case, the secret was defined at: "StarWarsJedi####################" (32 chars) and secret_2 was defined at: "RabbitsEatCarrot" (16ch)
+In this case, the secret was defined at: "cad63375bd783382####################" (32 chars) and secret_2 was defined at: "a92e070ecd301b6d" (16ch)
 */
 ```
 
@@ -157,8 +159,8 @@ To decrypt a JSON or Simple JavaScript Object you should call `jsonCrypto.decryp
 
 1. json: <font size="1">_REQUIRED_</font> A input JSON or Object that should be decrypted. Should be of type `JSON` or `Object`.
 2. encriptedKeys: <font size="1">_OPTIONAL_</font> Define if Object keys will be also decrypted. Should be of type `Boolean`. The default value is `false`.
-3. secret: <font size="1">_OPTIONAL_</font> Secret string (with up to 32 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
-4. secret_2: <font size="1">_OPTIONAL_</font> Secret string (with up to 16 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
+3. secret: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 32 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
+4. secret_2: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 16 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
 
 ### Output
 
@@ -222,7 +224,7 @@ jsonCrypto.decrypt({
   '16de1fe449': '09c216de5e4f0d4eb15b9f830178d87bc7ff',
   '16de1fe448': { '16de1fe4487253': '35da15d32b4c0e54b861cb' },
   '16de1fe44b': [ '0bda0ace1872547eec', '0bda0ace1872547eef' ]
-}, true, "StarWarsJedi", "RabbitsEatCarrotsInTheMorning");
+}, true, "cad63375bd783382", "a92e070ecd301b6de99a8985f8e9cf9f");
 /*
 Output:
 {
@@ -233,7 +235,7 @@ Output:
     key_5: { key_5_1: "value_5" },
     key_6: ["value_6_1", "value_6_2"],
 }
-In this case, the secret was defined at: "StarWarsJedi####################" (32 chars) and secret_2 was defined at: "RabbitsEatCarrot" (16ch)
+In this case, the secret was defined at: "cad63375bd783382####################" (32 chars) and secret_2 was defined at: "a92e070ecd301b6d" (16ch)
 */
 ```
 
@@ -244,8 +246,8 @@ To decrypt a `String` you should call `jsonCrypto.decryptKey(string, secret, sec
 ### Arguments:
 
 1. string: <font size="1">_REQUIRED_</font> A input string that should be decrypted. Should be of type `string`.
-2. secret: <font size="1">_OPTIONAL_</font> Secret string (with up to 32 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
-3. secret_2: <font size="1">_OPTIONAL_</font> Secret string (with up to 16 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
+2. secret: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 32 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
+3. secret_2: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 16 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
 
 ### Output
 
@@ -257,7 +259,35 @@ This should return a `String`, `Number`, `Boolean` or `null` decrypted.
 import jsonCrypto from '@danilo_pereira/json-crypto';
 ...
 // SIMPLE CASE:
-jsonCrypto.decrypt("126b1c3b908fc3");
+jsonCrypto.decryptKey("126b1c3b908fc3");
+/*
+Output:
+"value_1"
+ */
+
+```
+
+## Encrypt Syngle Key
+
+To encrypt a `String` you should call `jsonCrypto.encryptKey(string, secret, secret_2)`.
+
+### Arguments:
+
+1. string: <font size="1">_REQUIRED_</font> A input string that should be encrypted. Should be of type `string`.
+2. secret: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 32 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
+3. secret_2: <font size="1">_OPTIONAL_</font> Secret hex string (with up to 16 chars). Needs to be the same secret hash used to encrypt. Should be of type `String`. We use a default hash if not informed.
+
+### Output
+
+This should return a `String`, `Number`, `Boolean` or `null` decrypted.
+
+### Example
+
+```javascript
+import jsonCrypto from '@danilo_pereira/json-crypto';
+...
+// SIMPLE CASE:
+jsonCrypto.decryptKey("126b1c3b908fc3");
 /*
 Output:
 "value_1"
